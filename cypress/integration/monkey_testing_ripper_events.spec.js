@@ -53,8 +53,7 @@ const randomComboBox = (monkeys) => {
         var select = $selects.get(getRandomInt(0, $selects.length));
         if (!Cypress.dom.isHidden(select)) {
             var options = select.children;
-            filters = Array.from(options).filter(option => !option.disabled);
-            var values = filters[getRandomInt(0, filters.length)].value;
+            var values = options[getRandomInt(0, options.length)].value;
             cy.wrap(select).select(values, { force: true });
             monkeys = monkeys - 1;
         }
@@ -76,12 +75,12 @@ const randomText = (monkeys) => {
     })
 }
 
-const randomFunctions = [randomText, randomClick, randomButtonClick, randomComboBox];
+const functions = [randomText, randomClick, randomButtonClick, randomComboBox];
 const selectors = ['input', 'a', 'button', 'select'];
 
 const randomEvent = (monkeys) => {
     if (monkeys > 0) {
-        var option = getRandomInt(0, randomFunctions.length);
-        Operate(selectors[option], randomFunctions[option], monkeys);
+        var option = getRandomInt(0, functions.length);
+        Operate(selectors[option], functions[option], monkeys);
     }
 }
